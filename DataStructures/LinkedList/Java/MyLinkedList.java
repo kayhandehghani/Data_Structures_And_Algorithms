@@ -1,7 +1,4 @@
-import java.util.LinkedHashMap;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.Hashtable;
 
 /**
  * @summary: simple implementation of a generic Singly-Linked List
@@ -76,28 +73,21 @@ public class MyLinkedList<T> {
 
 	public void removeDuplicates() {
 		if(isEmpty()) return;
-
-		Map<T, Node<T>> uniqPairs = new LinkedHashMap<>(); // to preseve the order
+		Hashtable table = new Hashtable<>();
 		Node<T> currentNode = header.head;
-
-		while(currentNode != null) { // store unique values in the Map
-			uniqPairs.put(currentNode.value, currentNode);
+		Node<T> prevNode = null;
+		while(currentNode != null) {
+			if(table.containsKey(currentNode.value)) {
+				prevNode.next = currentNode.next; // drop the currentNode
+				size--;
+			} else {
+				table.put(currentNode.value, true);
+				prevNode = currentNode; 
+			}
 			currentNode = currentNode.next;
 		}
-		
-		// build the new LinkedList from unique values
-		Collection<Node<T>> uniqVals = uniqPairs.values(); 
-		Iterator<Node<T>> it = uniqVals.iterator();
-		size = uniqVals.size(); 
-		header.head = it.next(); // starting point
-		currentNode = header.head; 
-
-		while(it.hasNext()) {
-			currentNode.next = it.next();
-			currentNode = currentNode.next;
-		}
-		
-		header.tail = currentNode;
+		// update the tail
+		header.tail = prevNode;
 		header.tail.next = null;
 	}
 
