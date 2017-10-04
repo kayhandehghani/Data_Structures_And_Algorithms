@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-
 public class MyLinkedListTest {
 
 	public static void main(String[] args) {
@@ -60,6 +59,28 @@ public class MyLinkedListTest {
 		System.out.println(ll);
 		ll.clear();
 		System.out.println(ll); // empty
+		ll.insert(9);
+		ll.insert("another");
+		ll.insert(9);
+		ll.insert(-88.1212);
+		ll.insert(9);
+		ll.insert("another");
+		ll.insert("another");
+		ll.insert("another");
+		ll.insert(9);
+		ll.insert(9);
+		System.out.println(ll); 
+		ll.removeDuplicates();
+		System.out.println(ll); // only one "another" and one 9
+		ll.insert(-88.1212);
+		ll.insert(-88.1212);
+		ll.insert(-88.1212);
+		ll.insert(-88.1212);
+		ll.insert(-88.1212);
+		ll.insert(-88.1212);
+		System.out.println(ll); 
+		ll.removeDuplicates();
+		System.out.println(ll); 
 
 	}
 }
