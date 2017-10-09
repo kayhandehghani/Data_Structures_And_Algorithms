@@ -1,4 +1,5 @@
-import java.util.Hashtable;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @summary: simple implementation of a generic Singly-Linked List
@@ -73,15 +74,15 @@ public class MyLinkedList<T> {
 
 	public void removeDuplicates() {
 		if(isEmpty()) return;
-		Hashtable table = new Hashtable<>();
+		Map<T, T> map = new HashMap<>();
 		Node<T> currentNode = header.head;
 		Node<T> prevNode = null;
 		while(currentNode != null) {
-			if(table.containsKey(currentNode.value)) {
+			if(map.containsKey(currentNode.value)) {
 				prevNode.next = currentNode.next; // drop the currentNode
 				size--;
 			} else {
-				table.put(currentNode.value, true);
+				map.put(currentNode.value, null);
 				prevNode = currentNode; 
 			}
 			currentNode = currentNode.next;
@@ -91,12 +92,37 @@ public class MyLinkedList<T> {
 		header.tail.next = null;
 	}
 
-	public Node getTail() {
-		return header.tail;
+	public T nthToLast(int n) {
+		if(n > size || n < 1 || isEmpty()) {
+			return null;
+		}
+		if(n == 1) { // first to last == tail
+			return header.tail.value;
+		}
+		Node<T> currentNodet = header.head;
+
+		// nth to last is at index (size - n), starting at zero!
+		int idx = 0;
+		while(idx != size - n) {
+			currentNodet = currentNodet.next;
+			idx++;
+		}
+
+		return currentNodet.value;
 	}
 
-	public Node getHead() {
-		return header.head;
+	public T getTail() {
+		if(isEmpty()) 
+			return null;
+		else 
+			return header.tail.value;
+	}
+
+	public T getHead() {
+		if(isEmpty()) 
+			return null;
+		else 
+			return header.head.value;
 	}
 
 	public boolean isEmpty() {
@@ -128,18 +154,14 @@ public class MyLinkedList<T> {
 		return result;
 	}
 
-	class Header<T> {
+	private class Header<T> {
 		Node<T> head;
 		Node<T> tail;
 	}
 
-	class Node<T> {
+	private class Node<T> {
 		Node<T> next;
 		T value;
-
-		Node() {
-			value = null;
-		}
 
 		Node(T t) {
 			value = t;

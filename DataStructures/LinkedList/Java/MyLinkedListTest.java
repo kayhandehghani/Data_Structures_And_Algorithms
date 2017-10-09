@@ -5,15 +5,15 @@ public class MyLinkedListTest {
 		MyLinkedList ll = new MyLinkedList<String>();
 		System.out.println(ll.isEmpty());
 		ll.insert("first");
-		System.out.println(ll.getHead().value);
-		System.out.println(ll.getTail().value);
+		System.out.println(ll.getHead());
+		System.out.println(ll.getTail());
 		ll.insert("second");
-		System.out.println(ll.getHead().value);
-		System.out.println(ll.getTail().value);
+		System.out.println(ll.getHead());
+		System.out.println(ll.getTail());
 		ll.insert("third");
 		ll.insert(9);
-		System.out.println(ll.getHead().value);
-		System.out.println(ll.getTail().value);
+		System.out.println(ll.getHead());
+		System.out.println(ll.getTail());
 		System.out.println(ll.isEmpty());
 		System.out.println(ll); 
 		System.out.println(ll.deleteNode("second")); // returns true
@@ -74,11 +74,22 @@ public class MyLinkedListTest {
 		System.out.println(ll); // only one "another" and one 9
 		ll.insert(-88.1212);
 		ll.insert(-88.1212);
+		ll.insert(8);
 		ll.insert(-88.1212);
 		ll.insert(-88.1212);
+		ll.insert(7);
+		ll.insert(9);
 		ll.insert(-88.1212);
 		ll.insert(-88.1212);
 		System.out.println(ll); 
+		System.out.println(ll.nthToLast(50)); // null
+		System.out.println(ll.nthToLast(0)); // null
+		System.out.println(ll.nthToLast(1)); // -88.1212
+		System.out.println(ll.nthToLast(2)); // -88.1212
+		System.out.println(ll.nthToLast(3)); // 9
+		System.out.println(ll.nthToLast(4)); // 7
+		System.out.println(ll.nthToLast(12)); // 9
+		System.out.println(ll.nthToLast(13)); // null
 		ll.removeDuplicates();
 		System.out.println(ll); 
 

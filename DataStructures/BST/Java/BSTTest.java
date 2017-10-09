@@ -46,5 +46,14 @@ public class BSTTest {
             System.out.println("min: " + bst.min() + ", max: " + bst.max());
         } catch (Exception e) {
         }
+        System.out.println(bst.isBalanaced());
+        bst.clear();
+        bst.insert(8);
+        bst.insert(6);
+        bst.insert(11);
+        bst.insert(-1);
+        System.out.println(bst.isBalanaced()); // true
+        bst.insert(-8);
+        System.out.println(bst.isBalanaced()); // false
     }
 }

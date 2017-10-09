@@ -5,6 +5,20 @@
 public class BST {
     private Node root;
 
+    public boolean isBalanaced() {
+        return (maxDepth(root) - minDepth(root) <= 1);
+    }
+
+    private int maxDepth(Node node) {
+        if(node == null) return 0;
+        return 1 + Math.max(maxDepth(node.lChild), maxDepth(node.rChild));
+    }
+
+    private int minDepth(Node node) {
+        if(node == null) return 0;
+        return 1 + Math.min(minDepth(node.lChild), minDepth(node.rChild));
+    }
+
     public void insert(int value) {
         Node newNode = new Node(value);
         if(root != null) {
@@ -84,19 +98,16 @@ public class BST {
             // determine a node to replace the deleted node
             if(currentNode != null) { // currentNode has key = value
                 if(currentNode.lChild != null && currentNode.rChild != null) { // has two children
-                    try {
-                        Node[] nodes = successor(currentNode);
-                        Node successor = nodes[0];
-                        Node successorParent = nodes[1];
-                        if(successorParent == currentNode) { // successor is the right child of currentNode
-                            replacingNode = successor;
-                            replacingNode.lChild = currentNode.lChild;
-                        } else { 
-                            currentNode.value = successor.value;
-                            successorParent.lChild = successor.rChild; // equivalent to delete successor
-                            return;
-                        }
-                    } catch (Exception e) {
+                    Node[] nodes = successor(currentNode);
+                    Node successor = nodes[0];
+                    Node successorParent = nodes[1];
+                    if(successorParent == currentNode) { // successor is the right child of currentNode
+                        replacingNode = successor;
+                        replacingNode.lChild = currentNode.lChild;
+                    } else { 
+                        currentNode.value = successor.value;
+                        successorParent.lChild = successor.rChild; // equivalent to delete successor
+                        return;
                     }
                 } else if(currentNode.lChild != null) { // has only left child
                     replacingNode = currentNode.lChild;
@@ -116,22 +127,22 @@ public class BST {
     }
 
     // returns the successor in right sub tree and its parent
-    private Node[] successor(Node node) throws IllegalAccessException {
-        try {
-            Node parent = null;
-            Node successor = node;
-            if(successor != null && successor.rChild != null) {
+    private Node[] successor(Node node) {
+        Node parent = null;
+        Node successor = node;
+        if(successor != null && successor.rChild != null) {
+            parent = successor;
+            successor = successor.rChild;
+            while(successor.lChild != null) {
                 parent = successor;
-                successor = successor.rChild;
-                while(successor.lChild != null) {
-                    parent = successor;
-                    successor = successor.lChild;
-                }
+                successor = successor.lChild;
             }
-            return new Node[] {successor, parent};
-        } catch (Exception e) {
-            throw new IllegalAccessException("sucessor: empty tree");
         }
+        return new Node[] {successor, parent};
+    }
+
+    public void clear() {
+        root = null;
     }
 
     public boolean contains(int value) {
@@ -142,7 +153,7 @@ public class BST {
     private boolean hasValue(Node root, int value) {
         if(root == null) {
             return false;
-        }else if(root.value == value) {
+        } else if(root.value == value) {
             return true;
         } else {
             return hasValue(root.lChild, value) || hasValue(root.rChild, value);
