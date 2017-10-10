@@ -42,6 +42,12 @@ public class BSTTest {
         bst.print();
         bst.deleteAll(126);
         bst.print();
+        System.out.println("\nin-orde traversal:\n");
+        bst.inOrderPrint();
+        System.out.println("\npre-orde traversal:\n");
+        bst.preOrderPrint();
+        System.out.println("\npost-orde traversal:\n");
+        bst.postOrderPrint();
         try {
             System.out.println("min: " + bst.min() + ", max: " + bst.max());
         } catch (Exception e) {
@@ -50,10 +56,21 @@ public class BSTTest {
         bst.clear();
         bst.insert(8);
         bst.insert(6);
-        bst.insert(11);
+        bst.insert(17);
         bst.insert(-1);
         System.out.println(bst.isBalanaced()); // true
         bst.insert(-8);
         System.out.println(bst.isBalanaced()); // false
+        bst.insert(2);
+        bst.insert(7);
+        bst.insert(14);
+        bst.insert(11);
+        bst.insert(20);
+        System.out.println("\nin-orde traversal:\n");
+        bst.inOrderPrint();
+        System.out.println("\npre-orde traversal:\n");
+        bst.preOrderPrint();
+        System.out.println("\npost-orde traversal:\n");
+        bst.postOrderPrint();
     }
 }

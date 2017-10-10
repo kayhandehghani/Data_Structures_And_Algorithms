@@ -1,3 +1,5 @@
+import java.util.Stack;
+
 /**
  * @summary: simple implementation of a Binary Search Tree of integers
  * @author: Kayhan Dehghani
@@ -158,6 +160,76 @@ public class BST {
         } else {
             return hasValue(root.lChild, value) || hasValue(root.rChild, value);
         }
+    }
+
+    // non-recursive
+    public void inOrderPrint() {
+        System.out.print("[ ");
+        if(root != null) {
+            Stack<Node> s = new Stack<>();
+            Node current = root;
+            while(true) {
+                // push the root.left to stack
+                while(current != null) {
+                    s.push(current);
+                    current = current.lChild;
+                }
+                if(!s.isEmpty()) {
+                    current = s.pop();
+                    System.out.print(current.value + " ");
+                    current = current.rChild;
+                } else {
+                    break; // stack is empty: all nodes have been visited
+                }
+            }
+        }
+        System.out.print(" ]\n\n");
+    }
+    
+    // non-recursive
+    public void preOrderPrint() {
+        System.out.print("[ ");
+        if(root != null) {
+            Stack<Node> s = new Stack<>();
+            Node current = root;
+            s.push(current);
+            while(!s.isEmpty()) {
+                current = s.pop();
+                System.out.print(current.value + " ");
+                if(current.rChild != null) {
+                    s.push(current.rChild);
+                } 
+                if(current.lChild != null) {
+                    s.push(current.lChild);
+                } 
+            }
+        }
+        System.out.print(" ]\n\n");
+    }
+    
+    // non-recursive
+    public void postOrderPrint() {
+        System.out.print("[ ");
+        if(root != null) {
+            Stack<Node> traverseStack = new Stack<>();
+            Stack<Node> mainStack = new Stack<>();
+            Node current = root;
+            traverseStack.push(current);
+            while(!traverseStack.isEmpty()) {
+                current = traverseStack.pop();
+                mainStack.push(current); // leave the current node (self) to be printed later
+                if(current.lChild != null) {
+                    traverseStack.push(current.lChild);
+                }
+                if(current.rChild != null) {
+                    traverseStack.push(current.rChild);
+                }
+            }
+            while(!mainStack.isEmpty()) {
+                System.out.print(mainStack.pop().value + " ");
+            }
+        }
+        System.out.print(" ]\n\n");
     }
 
     public void print() {
