@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.Stack;
+import java.util.List;
 
 /**
  * @summary: simple implementation of a Binary Search Tree of integers
@@ -160,6 +162,45 @@ public class BST {
         } else {
             return hasValue(root.lChild, value) || hasValue(root.rChild, value);
         }
+    }
+
+    // returns a list of n lists: the inner lists contain all the nodes at each level
+    // n is the depth of the tree
+    public List<List<Integer>> getLevelList() {
+        int level = 0;
+        List<List<Node>> levelList = new ArrayList<>();
+        List<Node> currentList = new ArrayList<>();
+        Node currentNode = root;
+        currentList.add(root);
+        levelList.add(level, currentList);
+        while(true) {
+            currentList = new ArrayList<>();
+            for(int i = 0; i < levelList.get(level).size(); i++) {
+                currentNode = levelList.get(level).get(i);
+                if(currentNode.lChild != null) {
+                    currentList.add(currentNode.lChild);
+                }
+                if(currentNode.rChild != null) {
+                    currentList.add(currentNode.rChild);
+                }
+            }
+            if(currentList.isEmpty()) {
+                break;
+            } 
+            levelList.add(++level, currentList);
+        }
+        
+        // return only the values not the nodes
+        List<List<Integer>> result = new ArrayList<>();
+        List<Integer> intList;
+        for(List<Node> l : levelList) {
+            intList = new ArrayList<>();
+            for(Node n : l) {
+                intList.add(n.value);
+            }
+            result.add(intList);
+        }
+        return result;
     }
 
     // non-recursive

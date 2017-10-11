@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class BSTTest {
     public static void main(String[] args) {
         BST bst = new BST();
@@ -16,6 +18,17 @@ public class BSTTest {
         bst.insert(1);
         bst.insert(2);
         bst.insert(7);
+
+        // testing getLevelList
+        List<List<Integer>> levelList = bst.getLevelList();
+        for(int i = 0; i < levelList.size(); i++) {
+            System.out.print("Level " + i + " : " );
+            for(int val : levelList.get(i)) {
+                System.out.print(val + ", " );
+            }
+            System.out.println();
+        }
+
         if(!bst.contains(20) || !bst.contains(126) || !bst.contains(8) || bst.contains(-1)) {
             System.out.println("Error: contains method is NOT working");
         }
