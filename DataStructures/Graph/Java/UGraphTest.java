@@ -55,5 +55,31 @@ public class UGraphTest {
         }
         g.clear();
         System.out.println(g);
+        
+        // testing connected method
+        g.addVertex(0);
+        g.addVertex(1);
+        g.addVertex(2);
+        g.addVertex(3);
+        g.addVertex(4);
+        g.addVertex(5);
+        g.addEdge(0,1);
+        g.addEdge(1,3);
+        g.addEdge(2,3);
+        g.addEdge(5,3);
+        if(g.connected(4, 1) || g.connected(4, 0) || g.connected(4, 3) || !g.connected(0, 5) || !g.connected(3, 0)) {
+            System.out.println("Error: connected failed!");
+        }
+        g.clear();
+        for(int i = 10; i < 20; i++) {
+            g.addVertex(i);
+        }
+        for(int i = 10; i < 19; i++) {
+            g.addEdge(i, i+1);
+        }
+        if(!g.connected(10, 20)) {
+            System.out.println("Error: connected failed!");
+        }
+        System.out.println(g);
     }
 }

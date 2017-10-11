@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Stack;
 import java.util.List;
 import java.util.Map;
 
@@ -42,6 +43,35 @@ public class UGraph<T> {
 		if(v1 == null || v2 == null) return false;
 		// check if edge exist
 		return v1.isNeighbor(id2);
+	}
+
+	// tests whether there is a route between two vertices
+	public boolean connected(T id1, T id2) {
+		// check if vertices exist
+		Vertex v1 = this.get(id1);
+		Vertex v2 = this.get(id2);
+		if(v1 == null || v2 == null) return false;
+		for(Vertex<T> v : vertices) {
+			v.status = State.Unvisited;
+		}
+		Stack<Vertex<T>> hasRoute = new Stack<>();
+		hasRoute.push(v1);
+		Vertex<T> current;
+		Vertex<T> neighbor;
+		while(!hasRoute.isEmpty()) {
+			current = hasRoute.pop();
+			for(T n : current.neighbors) {
+				neighbor = this.get(n);
+				if(neighbor.status == State.Unvisited) {
+					if(neighbor.id == id2) {
+						return true; // route has been found
+					}
+					neighbor.status = State.Visited;
+					hasRoute.push(neighbor);
+				}
+			}
+		}
+		return false;
 	}
 
 	// lists all vertices y such that there is an edge from the vertex id to the vertex y
@@ -138,5 +168,5 @@ class Vertex<T> {
 
 }
 enum State {
-	Unvisited, Visited, Visiting;
+	Unvisited, Visited;
 }
